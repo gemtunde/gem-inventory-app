@@ -19,10 +19,12 @@ const menu = [
       {
         title: "Profile",
         path: "/profile",
+        icon: <BiImageAdd />,
       },
       {
         title: "Edit Profile",
         path: "/edit-profile",
+        icon: <BiImageAdd />,
       },
     ],
   },
