@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 import "./Home.scss";
 import HeroImg from "../../assets/inv-img.png";
+import { ShowOnLogin, ShowOnLogout } from "../../Components/HiddenLinks";
 
 const Home = () => {
   return (
@@ -16,21 +17,27 @@ const Home = () => {
           <RiProductHuntLine size={35} />
         </div>
         <ul className="home-links">
-          <li>
-            <button className="--btn --btn-primary">
-              <Link to="/register">Register </Link>
-            </button>
-          </li>
-          <li>
-            <button className="--btn --btn-primary">
-              <Link to="/login">Login </Link>
-            </button>
-          </li>
-          <li>
-            <button className="--btn --btn-primary">
-              <Link to="/dashboard">Dashboard</Link>
-            </button>
-          </li>
+          <ShowOnLogout>
+            <li>
+              <button className="--btn --btn-primary">
+                <Link to="/register">Register </Link>
+              </button>
+            </li>
+          </ShowOnLogout>
+          <ShowOnLogout>
+            <li>
+              <button className="--btn --btn-primary">
+                <Link to="/login">Login </Link>
+              </button>
+            </li>
+          </ShowOnLogout>
+          <ShowOnLogin>
+            <li>
+              <button className="--btn --btn-primary">
+                <Link to="/dashboard">Dashboard</Link>
+              </button>
+            </li>
+          </ShowOnLogin>
         </ul>
       </nav>
       {/* HERO SECTION  */}

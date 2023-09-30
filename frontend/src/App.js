@@ -7,10 +7,34 @@ import ResetPassword from "./pages/Auth/Reset";
 import Sidebar from "./Components/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import Layout from "./Components/Layout";
+import axios from "axios";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { getLoginStatus } from "./services/authService";
+import { useEffect } from "react";
+import { SET_LOGIN } from "./redux/features/auth/authSlice";
+
+//helps to add cookies to out axios request accross the appilcation
+axios.defaults.withCredentials = true;
 
 function App() {
+  const dispatch = useDispatch();
+  // const loginStatus = async () => {
+
+  // };
+
+  useEffect(() => {
+    async function loginStatus() {
+      const status = await getLoginStatus();
+      dispatch(SET_LOGIN(status));
+    }
+    loginStatus();
+  }, [dispatch]);
+
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/login" element={<Login />} />

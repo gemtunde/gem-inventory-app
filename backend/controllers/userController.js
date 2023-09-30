@@ -101,6 +101,7 @@ const loginUser = async (req, res) => {
 
     //compare passsword
     const comparePassword = await bcrypt.compare(password, user.password);
+
     if (!comparePassword) {
       throw new Error("Wrong Password");
     }
@@ -110,15 +111,17 @@ const loginUser = async (req, res) => {
 
     //send HTTP-only cookie
     //cookie is better than local storage bcoz it sucures againt cross-browser attackes
-    res.cookie("token", token, {
-      path: "/",
-      httpOnly: true,
-      expires: new Date(Date.now() + 1000 * 86400), //1day
-      sameSite: "none",
-      secure: true,
-    });
+    if (comparePassword) {
+      res.cookie("token", token, {
+        path: "/",
+        httpOnly: true,
+        expires: new Date(Date.now() + 1000 * 86400), //1day
+        sameSite: "none",
+        secure: true,
+      });
+    }
     //response
-    if (user) {
+    if (user && comparePassword) {
       const { _id, name, email, photo, phone, bio } = user;
 
       res.status(200).json({
@@ -192,7 +195,7 @@ const getUser = async (req, res) => {
 
 //login status
 const loginStatus = async (req, res) => {
-  const token = res.cookies.token;
+  const token = req.cookies.token;
   if (!token) {
     return res.json(false);
   }
