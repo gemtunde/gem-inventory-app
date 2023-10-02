@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { getLoginStatus } from "./services/authService";
 import { useEffect } from "react";
 import { SET_LOGIN } from "./redux/features/auth/authSlice";
+import AddProduct from "./pages/AddProduct";
 
 //helps to add cookies to out axios request accross the appilcation
 axios.defaults.withCredentials = true;
@@ -51,6 +52,16 @@ function App() {
             <Sidebar>
               <Layout>
                 <Dashboard />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/add-product"
+          element={
+            <Sidebar>
+              <Layout>
+                <AddProduct />
               </Layout>
             </Sidebar>
           }
