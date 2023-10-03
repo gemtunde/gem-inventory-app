@@ -106,8 +106,7 @@ const getProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
   try {
-    const { productid } = req.params;
-    const product = await Product.findById({ _id: productid });
+    const product = await Product.findById(req.params.id);
 
     if (!product) {
       res.status(400);
@@ -120,7 +119,7 @@ const deleteProduct = async (req, res) => {
       throw new Error("User not authorized");
     }
     //remove product
-    await product.remove();
+    await Product.findByIdAndDelete(req.params.id);
 
     res.status(200).json("Product deleted");
   } catch (error) {

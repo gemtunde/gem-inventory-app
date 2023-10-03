@@ -10,10 +10,22 @@ import {
   selectFilteredProducts,
 } from "../../../redux/features/product/searchFilterSlice";
 import ReactPaginate from "react-paginate";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import {
+  deleteProduct,
+  getProducts,
+} from "../../../redux/features/product/productSlice";
+import { Link } from "react-router-dom";
 
 const ProductList = ({ products, isLoading }) => {
   const [search, setSearch] = useState("");
 
+  //access state
+  const dispatch = useDispatch();
+  const filteredProduct = useSelector(selectFilteredProducts);
+
+  //text shortener... place it in utility folder later
   const shortenText = (text, n) => {
     if (text.length > n) {
       const reducedText = text.substring(0, n).concat("...");
@@ -22,9 +34,30 @@ const ProductList = ({ products, isLoading }) => {
     return text;
   };
 
-  //access state
-  const dispatch = useDispatch();
-  const filteredProduct = useSelector(selectFilteredProducts);
+  //delete product function
+  const delProduct = async (id) => {
+    console.log(id);
+    dispatch(deleteProduct(id));
+    dispatch(getProducts());
+  };
+
+  //confirm alert --utility folder
+  const confirmDelete = (id, name) => {
+    confirmAlert({
+      title: `Delete Product- ${name}`,
+      message: "Are you sure you want to delete this product.",
+      buttons: [
+        {
+          label: "Delete",
+          onClick: () => delProduct(id),
+        },
+        {
+          label: "Cancel",
+          //onClick: () => alert("Click No"),
+        },
+      ],
+    });
+  };
 
   // Begin Pagination
   const [currentItems, setCurrentItems] = useState([]);
@@ -100,15 +133,23 @@ const ProductList = ({ products, isLoading }) => {
                       <td className="icons">
                         <span>
                           {" "}
-                          <AiOutlineEye size={20} color="purple" />
+                          <Link to={`/product-detail/${_id}`}>
+                            <AiOutlineEye size={20} color="purple" />
+                          </Link>
                         </span>
                         <span>
                           {" "}
-                          <FaEdit size={20} color="green" />
+                          <Link to={`/edit-product/${_id}`}>
+                            <FaEdit size={20} color="green" />
+                          </Link>
                         </span>
                         <span>
                           {" "}
-                          <FaTrashAlt size={20} color="red" />
+                          <FaTrashAlt
+                            size={20}
+                            color="red"
+                            onClick={() => confirmDelete(_id, name)}
+                          />
                         </span>
                       </td>
                     </tr>

@@ -15,6 +15,9 @@ import { getLoginStatus } from "./services/authService";
 import { useEffect } from "react";
 import { SET_LOGIN } from "./redux/features/auth/authSlice";
 import AddProduct from "./pages/AddProduct";
+import ProductDetail from "./Components/product/ProductDetail";
+import EditProduct from "./pages/EditProduct";
+import Profile from "./pages/Profile";
 
 //helps to add cookies to out axios request accross the appilcation
 axios.defaults.withCredentials = true;
@@ -62,6 +65,36 @@ function App() {
             <Sidebar>
               <Layout>
                 <AddProduct />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/product-detail/:id"
+          element={
+            <Sidebar>
+              <Layout>
+                <ProductDetail />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/edit-product/:id"
+          element={
+            <Sidebar>
+              <Layout>
+                <EditProduct />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <Sidebar>
+              <Layout>
+                <Profile />
               </Layout>
             </Sidebar>
           }
