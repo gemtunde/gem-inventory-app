@@ -18,6 +18,8 @@ import AddProduct from "./pages/AddProduct";
 import ProductDetail from "./Components/product/ProductDetail";
 import EditProduct from "./pages/EditProduct";
 import Profile from "./pages/Profile";
+import EditProfile from "./pages/Profile/EditProfile";
+import Contact from "./pages/Contact";
 
 //helps to add cookies to out axios request accross the appilcation
 axios.defaults.withCredentials = true;
@@ -95,6 +97,26 @@ function App() {
             <Sidebar>
               <Layout>
                 <Profile />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/edit-profile"
+          element={
+            <Sidebar>
+              <Layout>
+                <EditProfile />
+              </Layout>
+            </Sidebar>
+          }
+        />
+        <Route
+          path="/contact-us"
+          element={
+            <Sidebar>
+              <Layout>
+                <Contact />
               </Layout>
             </Sidebar>
           }

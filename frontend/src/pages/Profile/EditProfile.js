@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Card from "../../components/card/Card";
-import Loader from "../../components/loader/Loader";
-import { selectUser } from "../../redux/features/auth/authSlice";
+//import Card from "../../components/card/Card";
+//import Loader from "../../components/loader/Loader";
+//import { selectUser } from "../../redux/features/auth/authSlice";
 import "./Profile.scss";
 import { toast } from "react-toastify";
+import { selectUser } from "../../redux/features/auth/authSlice";
+import Loader from "../../Components/Loader";
+import Card from "../../Components/Card";
 import { updateUser } from "../../services/authService";
-import ChangePassword from "../../components/changePassword/ChangePassword";
+import ChangePassword from "../../Components/ChangePassword";
+//import ChangePassword from "../../components/changePassword/ChangePassword";
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -15,6 +19,7 @@ const EditProfile = () => {
   const user = useSelector(selectUser);
   const { email } = user;
 
+  //if page refreshes and no data in redux yet, go back to profile page
   useEffect(() => {
     if (!email) {
       navigate("/profile");
@@ -52,18 +57,20 @@ const EditProfile = () => {
           profileImage.type === "image/jpg" ||
           profileImage.type === "image/png")
       ) {
+        // setup cloudinary
         const image = new FormData();
         image.append("file", profileImage);
-        image.append("cloud_name", "zinotrust");
-        image.append("upload_preset", "wk66xdkq");
+        image.append("cloud_name", "gemtunde");
+        image.append("upload_preset", "jb5i6uol");
 
         // First save image to cloudinary
         const response = await fetch(
-          "https://api.cloudinary.com/v1_1/zinotrust/image/upload",
+          "https://api.cloudinary.com/v1_1/gemtunde/image/upload",
           { method: "post", body: image }
         );
         const imgData = await response.json();
         imageURL = imgData.url.toString();
+        console.log("image", imgData);
 
         // Save Profile
         const formData = {
@@ -141,7 +148,8 @@ const EditProfile = () => {
         </form>
       </Card>
       <br />
-      <ChangePassword />
+      {/* fix bugs here */}
+      {/* <ChangePassword /> */}
     </div>
   );
 };
